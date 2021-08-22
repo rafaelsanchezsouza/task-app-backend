@@ -4,4 +4,4 @@ import Task from '../models/Task';
 @EntityRepository(Task)
 class TasksRepository extends Repository<Task> { }
 
-export { TasksRepository };
+export default TasksRepository;
