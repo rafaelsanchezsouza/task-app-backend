@@ -1,10 +1,27 @@
 import { Request, Response } from 'express';
 import { TasksService } from '../services/TasksService';
+import * as Yup from 'yup';
 
 export default class TasksController {
   async create(request: Request, response: Response) {
     const { item } = request.body;
     const tasksService = new TasksService();
+
+    try {
+      const schema = Yup.object().shape({
+        item: Yup.string()
+          .required("Please enter the required field")
+          .matches(/^([A-Za-z1234567890\u00C0-\u00D6\u00D8-\u00f6\u00f8-\u00ff\s]*)$/gi,
+            'Cannot contain special characters.')
+      })
+
+      await schema.validate(request.body, { abortEarly: false });
+    } catch (err) {
+      console.log(err)
+      return response
+        .status(400)
+        .json({ error: 'Validation fails', messages: err.inner });
+    }
 
     try {
       const jsonData = { item }
