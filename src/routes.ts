@@ -9,6 +9,6 @@ const tasksController = new TasksController();
 routes.post('/tasks', tasksController.create);
 routes.get('/tasks', tasksController.listAll);
 routes.put('/tasks', tasksController.update);
-routes.delete('/tasks', tasksController.delete);
+routes.delete('/tasks/:id', tasksController.delete);
 
 export default routes;

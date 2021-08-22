@@ -9,7 +9,7 @@ export default class TasksController {
     try {
       const jsonData = { item }
       const task = tasksService.create(jsonData);
-      return response.status(201).json(task);
+      return response.status(201).json({ "item": (await task).item, "done": (await task).done });
     } catch (err) {
       return response.status(400).json({
         message: err.message,
@@ -37,7 +37,7 @@ export default class TasksController {
     const tasksService = new TasksService();
     try {
       const tasks = await tasksService.listAll();
-      return response.json(tasks);
+      return response.status(200).json({ "items": tasks });
     } catch (err) {
       return response.status(400).json({
         message: err.message,
@@ -49,8 +49,8 @@ export default class TasksController {
     const id = parseInt(request.params.id);
     const tasksService = new TasksService();
     try {
-      await tasksService.delete(id);
-      return response.json({ message: 'Task deleted' });
+      const task = await tasksService.delete(id);
+      return response.json(task);
     } catch (err) {
       return response.status(400).json({
         message: err.message,

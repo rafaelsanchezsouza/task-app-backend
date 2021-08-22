@@ -8,14 +8,14 @@ import {
 @Entity('tasks')
 export default class Task {
 
-  @PrimaryGeneratedColumn('increment')
-  id: number;
-
   @Column()
   item: string;
 
   @Column()
   done: boolean;
+
+  @PrimaryGeneratedColumn('increment')
+  id: number;
 
   @BeforeInsert()
   beforeInsertActions() {
