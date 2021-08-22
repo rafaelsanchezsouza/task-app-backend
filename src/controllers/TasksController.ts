@@ -17,7 +17,8 @@ export default class TasksController {
     }
   }
   async update(request: Request, response: Response) {
-    const { id, done } = request.body;
+    const id = parseInt(request.params.id);
+    const { done } = request.body;
 
     const tasksService = new TasksService();
     try {
