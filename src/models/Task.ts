@@ -12,19 +12,10 @@ export default class Task {
   id: number;
 
   @Column()
-  name: string;
-
-  @Column()
-  description: string;
+  item: string;
 
   @Column()
   done: boolean;
-
-  @CreateDateColumn()
-  created_at: Date;
-
-  @CreateDateColumn()
-  updated_at: Date;
 
   @BeforeInsert()
   beforeInsertActions() {

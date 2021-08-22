@@ -16,27 +16,13 @@ export class createTasks1629587313577 implements MigrationInterface {
                         generationStrategy: 'increment',
                     },
                     {
-                        name: 'name',
-                        type: 'varchar',
-                    },
-                    {
-                        name: 'description',
+                        name: 'item',
                         type: 'varchar',
                     },
                     {
                         name: 'done',
                         type: 'boolean',
                         default: false,
-                    },
-                    {
-                        name: 'created_at',
-                        type: 'timestamp',
-                        default: 'now()',
-                    },
-                    {
-                        name: 'updated_at',
-                        type: 'timestamp',
-                        default: 'now()',
                     },
                 ],
             })
