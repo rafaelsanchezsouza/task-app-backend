@@ -9,7 +9,6 @@ interface ITasksCreate {
 
 interface ITasksUpdate {
   id: number;
-  done: boolean;
 }
 
 class TasksService {
@@ -48,10 +47,10 @@ class TasksService {
     return task;
   }
 
-  async update({ id, done }: ITasksUpdate) {
+  async update({ id }: ITasksUpdate) {
     const task = await this.tasksRepository.findOne({ id });
 
-    task.done = !done;
+    task.done = !task.done;
 
     await this.tasksRepository.save(task);
 

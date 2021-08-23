@@ -19,13 +19,11 @@ export default class TasksController {
   }
   async update(request: Request, response: Response) {
     const id = parseInt(request.params.id);
-    const { done } = request.body;
 
     const tasksService = new TasksService();
     try {
       const novoPortal = await tasksService.update({
         id,
-        done,
       });
       return response.json(novoPortal);
     } catch (err) {
