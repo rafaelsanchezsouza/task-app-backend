@@ -1,8 +1,6 @@
 import {
   Entity,
-  Column,
-  PrimaryGeneratedColumn,
-  CreateDateColumn, BeforeInsert
+  Column, BeforeInsert, ObjectIdColumn, ObjectID
 } from 'typeorm';
 
 @Entity('tasks')
@@ -14,8 +12,8 @@ export default class Task {
   @Column()
   done: boolean;
 
-  @PrimaryGeneratedColumn('increment')
-  id: number;
+  @ObjectIdColumn()
+  id: ObjectID;
 
   @BeforeInsert()
   beforeInsertActions() {

@@ -1,5 +1,5 @@
 import { EntityRepository, Repository } from 'typeorm';
-import Task from '../models/Task';
+import Task from '../entity/Task';
 
 @EntityRepository(Task)
 class TasksRepository extends Repository<Task> { }

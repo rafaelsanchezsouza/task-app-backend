@@ -1,6 +1,5 @@
-import { getCustomRepository, Repository } from 'typeorm';
-import Task from '../models/Task';
-import TasksRepository from '../repositories/TasksRepository';
+import { getMongoRepository, MongoRepository } from 'typeorm';
+import Task from '../entity/Task';
 import * as Yup from 'yup';
 
 interface ITasksCreate {
@@ -12,15 +11,17 @@ interface ITasksUpdate {
 }
 
 class TasksService {
-  private tasksRepository: Repository<Task>;
+  private tasksRepository: MongoRepository<Task>;
 
   constructor() {
-    this.tasksRepository = getCustomRepository(TasksRepository);
+    this.tasksRepository = getMongoRepository(Task);
   }
   async create({ item }: ITasksCreate) {
+    console.log("entrou Service")
     const tasks = await this.tasksRepository.find();
-    const maxNumberOfTasks = tasks.length >= 100;
-
+    const maxNumberOfTasks = false;
+    console.log("maxNumberOfTasks")
+    console.log(maxNumberOfTasks)
     if (maxNumberOfTasks) {
       throw new Error('Limit of 100 tasks reached!');
     }
@@ -58,7 +59,10 @@ class TasksService {
   }
 
   async listAll() {
-    const tasks = await this.tasksRepository.find();
+    // const tasksRepository = getMongoRepository(Task);
+    // console.log(this.tasksRepository.manager)
+    // const tasks = await this.tasksRepository.createCursor(this.tasksRepository.find()).toArray();
+    const tasks = await this.tasksRepository.find()
 
     return tasks;
   }
