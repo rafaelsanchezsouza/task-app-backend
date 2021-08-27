@@ -1,5 +1,5 @@
-import { getMongoRepository, MongoRepository } from 'typeorm';
-import Task from '../entity/Task';
+import { getMongoRepository, MongoRepository, ObjectID } from 'typeorm';
+import { Task } from '../entity/Task';
 import * as Yup from 'yup';
 
 interface ITasksCreate {
@@ -7,7 +7,7 @@ interface ITasksCreate {
 }
 
 interface ITasksUpdate {
-  id: number;
+  id: ObjectID;
 }
 
 class TasksService {
@@ -51,29 +51,31 @@ class TasksService {
   async update({ id }: ITasksUpdate) {
     const task = await this.tasksRepository.findOne({ id });
 
-    task.done = !task.done;
-
-    await this.tasksRepository.save(task);
-
-    return task;
+    if (task) {
+      task.done = !task.done;
+      await this.tasksRepository.save(task);
+      return task;
+    } else {
+      throw new Error('Task not found.')
+    }
   }
 
   async listAll() {
-    // const tasksRepository = getMongoRepository(Task);
-    // console.log(this.tasksRepository.manager)
-    // const tasks = await this.tasksRepository.createCursor(this.tasksRepository.find()).toArray();
     const tasks = await this.tasksRepository.find()
-
     return tasks;
   }
 
-  async delete(id: number) {
-    const task = await this.tasksRepository.findOne({ id });
+  // async delete(id: number) {
+  //   const task = await this.tasksRepository.findOne({ id });
 
-    await this.tasksRepository.delete(task);
+  //   if (task) {
+  //     await this.tasksRepository.delete(task);
+  //     return task;
+  //   } else {
+  //     throw new Error('Task not found.')
+  //   }
 
-    return task;
-  }
+  // }
 }
 
 export { TasksService };

@@ -1,8 +1,8 @@
 import { Request, Response } from 'express';
 import { TasksService } from '../services/TasksService';
 
-import { getMongoRepository } from "typeorm";
-import Task from "../entity/Task";
+import { getMongoRepository, ObjectID } from "typeorm";
+import { Task } from "../entity/Task";
 
 
 export async function create(request: Request, response: Response) {
@@ -20,7 +20,7 @@ export async function create(request: Request, response: Response) {
   }
 }
 export async function update(request: Request, response: Response) {
-  const id = parseInt(request.params.id);
+  const id = request.params.id as unknown as ObjectID;
 
   const tasksService = new TasksService();
   try {
@@ -45,15 +45,15 @@ export async function listAll(
   return res.json(tasks);
 };
 
-  // export async function delete(request: Request, response: Response) {
-  //   const id = parseInt(request.params.id);
-  //   const tasksService = new TasksService();
-  //   try {
-  //     const task = await tasksService.delete(id);
-  //     return response.json(task);
-  //   } catch (err) {
-  //     return response.status(400).json({
-  //       message: err.message,
-  //     });
-  //   }
-  // }
+// export async function delete(request: Request, response: Response) {
+//   const id = request.params.id as unknown as ObjectID;
+//   const tasksService = new TasksService();
+//   try {
+//     const task = await tasksService.delete(id);
+//     return response.json(task);
+//   } catch (err) {
+//     return response.status(400).json({
+//       message: err.message,
+//     });
+//   }
+// }

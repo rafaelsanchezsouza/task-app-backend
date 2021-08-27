@@ -1,11 +1,7 @@
-import {
-  Entity,
-  Column, BeforeInsert, ObjectIdColumn, ObjectID
-} from 'typeorm';
+import { Entity, ObjectID, Column, ObjectIdColumn, BeforeInsert } from 'typeorm'
 
 @Entity('tasks')
-export default class Task {
-
+export class Task {
   @Column()
   item: string;
 
@@ -19,4 +15,4 @@ export default class Task {
   beforeInsertActions() {
     this.done = false;
   }
-}
+}	
