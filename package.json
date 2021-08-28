@@ -7,8 +7,8 @@
   "author": "Rafael Sanchez Souza <rafaelsanchezsouza@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "dev2": "ts-node-dev --transpile-only --ignore-watch node_modules src/server.ts",
-    "dev1": "tsc-watch --onSuccess \"node dist/index.js\"",
+    "dev1": "ts-node-dev --transpile-only --ignore-watch node_modules src/server.ts",
+    "dev2": "tsc-watch src/server.ts",
     "dev": "ts-node src/server.ts",
     "build": "tsc",
     "start": "node src/index.js"

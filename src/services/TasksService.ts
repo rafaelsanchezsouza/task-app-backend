@@ -19,10 +19,9 @@ class TasksService {
   async create({ item }: ITasksCreate) {
     console.log("entrou Service")
     const tasks = await this.tasksRepository.find();
-    const maxNumberOfTasks = false;
-    console.log("maxNumberOfTasks")
-    console.log(maxNumberOfTasks)
-    if (maxNumberOfTasks) {
+    const maxNumberOfTasks = 100;
+
+    if (tasks.length > maxNumberOfTasks) {
       throw new Error('Limit of 100 tasks reached!');
     }
 
@@ -49,7 +48,7 @@ class TasksService {
   }
 
   async update({ id }: ITasksUpdate) {
-    const task = await this.tasksRepository.findOne({ id });
+    const task = await this.tasksRepository.findOne(id);
 
     if (task) {
       task.done = !task.done;
@@ -65,17 +64,17 @@ class TasksService {
     return tasks;
   }
 
-  // async delete(id: number) {
-  //   const task = await this.tasksRepository.findOne({ id });
+  async delete(id: ObjectID) {
+    const task = await this.tasksRepository.findOne(id);
 
-  //   if (task) {
-  //     await this.tasksRepository.delete(task);
-  //     return task;
-  //   } else {
-  //     throw new Error('Task not found.')
-  //   }
+    if (task) {
+      await this.tasksRepository.delete(id);
+      return task;
+    } else {
+      throw new Error('Task not found.')
+    }
 
-  // }
+  }
 }
 
 export { TasksService };
