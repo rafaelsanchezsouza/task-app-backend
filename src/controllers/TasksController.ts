@@ -38,6 +38,8 @@ export default class TasksController {
     res: Response
   ): Promise<Response> {
     const taskRepository = getMongoRepository(Task);
+    console.log("Fetching from MongoDB User:")
+    console.log(process.env.USERNAME)
     const tasks = await taskRepository.find();
     console.log(tasks)
     return res.json(tasks);
