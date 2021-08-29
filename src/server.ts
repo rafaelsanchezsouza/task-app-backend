@@ -7,6 +7,8 @@ import morgan from 'morgan';
 const app = express();
 const port = process.env.PORT || 3333;
 createConnection();
+console.log("Connectiong to MongoDB User:")
+console.log(process.env.USERNAME)
 
 app.use(express.json());
 app.use(cors());
