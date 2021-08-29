@@ -5,6 +5,8 @@ const routes = Router();
 
 const tasksController = new TasksController();
 
+console.log("Entrou Router")
+
 // Tasks
 routes.post('/tasks', tasksController.create);
 routes.get('/tasks', tasksController.listAll);

@@ -1,13 +1,11 @@
 {
-  "type": "sqlite",
-  "database": "./src/database/database.sqlite",
-  "migrations": [
-    "./src/database/migrations/**.ts"
-  ],
+  "type": "mongodb",
+  "url": "mongodb+srv://ssraf:1bQlrwyVmIYbZtrc@cluster0.anpcq.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
+  "useNewUrlParser": true,
+  "synchronize": true,
+  "logging": true,
   "entities": [
-    "./src/models/**.ts"
+    "src/entity/**/*.ts"
   ],
-  "cli": {
-    "migrationsDir": "./src/database/migrations"
-  }
+  "useUnifiedTopology": true
 }

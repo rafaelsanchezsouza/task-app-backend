@@ -1,6 +1,5 @@
-import { getCustomRepository, Repository } from 'typeorm';
-import Task from '../models/Task';
-import TasksRepository from '../repositories/TasksRepository';
+import { getMongoRepository, MongoRepository, ObjectID } from 'typeorm';
+import { Task } from '../entity/Task';
 import * as Yup from 'yup';
 
 interface ITasksCreate {
@@ -8,20 +7,21 @@ interface ITasksCreate {
 }
 
 interface ITasksUpdate {
-  id: number;
+  id: ObjectID;
 }
 
 class TasksService {
-  private tasksRepository: Repository<Task>;
+  private tasksRepository: MongoRepository<Task>;
 
   constructor() {
-    this.tasksRepository = getCustomRepository(TasksRepository);
+    this.tasksRepository = getMongoRepository(Task);
   }
   async create({ item }: ITasksCreate) {
+    console.log("entrou Service")
     const tasks = await this.tasksRepository.find();
-    const maxNumberOfTasks = tasks.length >= 100;
+    const maxNumberOfTasks = 100;
 
-    if (maxNumberOfTasks) {
+    if (tasks.length > maxNumberOfTasks) {
       throw new Error('Limit of 100 tasks reached!');
     }
 
@@ -48,27 +48,32 @@ class TasksService {
   }
 
   async update({ id }: ITasksUpdate) {
-    const task = await this.tasksRepository.findOne({ id });
+    const task = await this.tasksRepository.findOne(id);
 
-    task.done = !task.done;
-
-    await this.tasksRepository.save(task);
-
-    return task;
+    if (task) {
+      task.done = !task.done;
+      await this.tasksRepository.save(task);
+      return task;
+    } else {
+      throw new Error('Task not found.')
+    }
   }
 
   async listAll() {
-    const tasks = await this.tasksRepository.find();
-
+    const tasks = await this.tasksRepository.find()
     return tasks;
   }
 
-  async delete(id: number) {
-    const task = await this.tasksRepository.findOne({ id });
+  async delete(id: ObjectID) {
+    const task = await this.tasksRepository.findOne(id);
 
-    await this.tasksRepository.delete(task);
+    if (task) {
+      await this.tasksRepository.delete(id);
+      return task;
+    } else {
+      throw new Error('Task not found.')
+    }
 
-    return task;
   }
 }
 
