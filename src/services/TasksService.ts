@@ -1,5 +1,5 @@
 import { getMongoRepository, MongoRepository, ObjectID } from 'typeorm';
-import { Task } from '../entity/Task';
+import { Task } from '../entity/Task.entity';
 import * as Yup from 'yup';
 
 interface ITasksCreate {

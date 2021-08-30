@@ -4,7 +4,7 @@ const srcConfig = {
   "useNewUrlParser": true,
   "synchronize": true,
   "logging": true,
-  "entities": ['src/entity/**/*.ts', './build/src/entity/*.js'],
+  "entities": ['**/src/entity/*{.ts,.js}'],
   "useUnifiedTopology": true
 }
 module.exports = srcConfig;
