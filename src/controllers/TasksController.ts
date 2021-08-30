@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { TasksService } from '../services/TasksService';
 
 import { getMongoRepository, ObjectID } from "typeorm";
-import { Task } from "../entity/Task.entity";
+import { Task } from "../entity/Task";
 
 
 export default class TasksController {
